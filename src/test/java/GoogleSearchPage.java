@@ -14,8 +14,6 @@ public class GoogleSearchPage extends GoogleBasePage {
     @FindBy(xpath = "//div[@class='g']")
     private List <WebElement> searchResults;
 
-    @FindBy(xpath = "//div[@id='resultStats']")
-    private WebElement searchResultsFound;
 
     public GoogleSearchPage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -23,8 +21,9 @@ public class GoogleSearchPage extends GoogleBasePage {
     }
 
     public boolean isPageLoaded() {
-        return searchResultsFound.isDisplayed()&& webDriver.getCurrentUrl().contains("/search");
+        return isUrlContains("/search?");
     }
+
 public int getSearchResultsNumber(){
         return searchResults.size();
 }

@@ -24,6 +24,7 @@ public class GoogleSearchTest {
      * - Push to the GitHub
      */
     private WebDriver webDriver;
+
     @BeforeMethod
     public void beforeMethod() {
         webDriver = new FirefoxDriver();
@@ -38,26 +39,34 @@ public class GoogleSearchTest {
 
 
     @Test
-    public void googleSearchTest(){
+    public void googleSearchTest() {
         String searchTerm = "Selenium";
 
         GoogleStartPage googleStartPage = new GoogleStartPage(webDriver);
 
-        Assert.assertTrue(googleStartPage.isPageLoaded(),"Google page is not loaded");
+        Assert.assertTrue(googleStartPage.isPageLoaded(), "Google page is not loaded");
 
         GoogleSearchPage googleSearchPage = googleStartPage.search(searchTerm);
 
-        Assert.assertTrue(googleSearchPage.isPageLoaded(),"Page with search results is not loaded");
+        Assert.assertTrue(googleSearchPage.isPageLoaded(), "Page with search results is not loaded");
 
-        Assert.assertEquals(googleSearchPage.getSearchResultsNumber(),10,"Results number doesn't match expected value");
+        Assert.assertEquals(googleSearchPage.getSearchResultsNumber(), 10, "Results number doesn't match expected value");
 
-        List<String> searchResultsList = googleSearchPage.getSearchResults();
+        List <String> searchResultsList = googleSearchPage.getSearchResults();
 
-            for(String searchResult : searchResultsList){
-                Assert.assertTrue(searchResult.toLowerCase().contains(searchTerm.toLowerCase()),"SearchTerm"+searchTerm+
-                        "not found in"+searchResult);
-            }
+        for (String searchResult : searchResultsList) {
+            Assert.assertTrue(searchResult.toLowerCase().contains(searchTerm.toLowerCase()), "SearchTerm" + searchTerm +
+                    "not found in" + searchResult);
+        }
         GoogleSecondSearchPage googleSecondSearchPage = googleSearchPage.navigateToSecondPage();
+
+        Assert.assertEquals(googleSecondSearchPage.getSearchResultsNumber(),10,"Results number doesn't match expected value");
+        List <String> secondSearchResultsList = googleSecondSearchPage.getSearchResults();
+
+        for (String searchResult : secondSearchResultsList) {
+            Assert.assertTrue(searchResult.toLowerCase().contains(searchTerm.toLowerCase()), "SearchTerm" + searchTerm +
+                    "not found in" + searchResult);
+        }
 
     }
 }

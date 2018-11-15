@@ -19,13 +19,14 @@ public class GoogleStartPage extends GoogleBasePage {
     }
 
     public boolean isPageLoaded(){
-        return  googleSearchBox.isDisplayed() && webDriver.getCurrentUrl().contains("google.com");
+        return webDriver.getCurrentUrl().contains("google.com")&& googleSearchBox.isDisplayed();
     }
     public GoogleSearchPage search(String searchTerm){
+        waitUntilElementIsClickable(googleSearchBox);
         googleSearchBox.sendKeys(searchTerm);
-        waitUntilElementIsClickable(searchButton);
-        searchButton.click();
+        googleSearchBox.sendKeys(Keys.RETURN);
         return new GoogleSearchPage(webDriver);
 
     }
+
 }
