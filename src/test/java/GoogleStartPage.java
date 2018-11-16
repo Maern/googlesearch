@@ -7,20 +7,31 @@ import org.openqa.selenium.support.PageFactory;
 public class GoogleStartPage extends GoogleBasePage {
 
 
-    @FindBy(xpath="//*[@id='lst-ib']")
+    @FindBy(xpath="//*[@name='q']")
     private WebElement googleSearchBox;
 
-    @FindBy(xpath="//input[@name='btnK']")
-    private WebElement searchButton;
-
+    /**
+     * Constructor for GoogleStartPage PageObject
+     * @param webDriver - WebDriver instance from test
+     */
     public GoogleStartPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
 
+    /**
+     * Method to check if page is loaded
+     * @return true or false value of check
+     */
     public boolean isPageLoaded(){
-        return webDriver.getCurrentUrl().contains("google.com")&& googleSearchBox.isDisplayed();
+        return waitUntilUrlContains("google.com")&& googleSearchBox.isDisplayed();
     }
+
+    /**
+     * Method to perform search on Google page
+     * @param searchTerm - String with search term required for test
+     * @return new GoogleSearchPage PageObject
+     */
     public GoogleSearchPage search(String searchTerm){
         waitUntilElementIsClickable(googleSearchBox);
         googleSearchBox.sendKeys(searchTerm);
